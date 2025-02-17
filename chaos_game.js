@@ -13,8 +13,11 @@ let currentPoint
 let divRatioSlider
 let resetButton
 let suspendAndResumeButton
+let numPolygonVertexesSelector
 let animationCount
 let animationRunning
+let currentDivRatio
+let currentNumVertexes
 
 function setup() {
     const canvasSize = 480
@@ -34,6 +37,9 @@ function setup() {
         animationCount = 0
         background(bgGrayScaleValue)
         animationRunning = true
+        currentDivRatio = divRatioSlider.value()
+        currentNumVertexes = parseInt(numPolygonVertexesSelector.value())
+        vertexes = spawnPolygonVertexes(currentNumVertexes)
     });
 
     nextComponentX += resetButton.width + gapBetweenComponents
@@ -48,18 +54,26 @@ function setup() {
 
     nextComponentX += suspendAndResumeButton.width + gapBetweenComponents
 
+    numPolygonVertexesSelector = createSelect();
+    numPolygonVertexesSelector.position(nextComponentX, 15);
+    numPolygonVertexesSelector.option(3);
+    numPolygonVertexesSelector.option(4);
+    numPolygonVertexesSelector.option(5);
+    numPolygonVertexesSelector.option(6);
+    numPolygonVertexesSelector.option(7);
+
+    nextComponentX += numPolygonVertexesSelector.width + gapBetweenComponents
+
     textSize(18);
 
-    divRatioSlider = createSlider(1, 99, 50, 1);
+    const defaultDivRatio = 50
+    divRatioSlider = createSlider(1, 99, defaultDivRatio, 1);
     divRatioSlider.position(nextComponentX, 15);
     divRatioSlider.style('width', '100px');
+    currentDivRatio = defaultDivRatio
 
-    vertexes = []
-    for (let i = 0; i < 3; i++) {
-        let x = width * 0.4 * cos(TAU / 3 * i)
-        let y = height * 0.4 * sin(TAU / 3 * i)
-        vertexes[i] = { x: x, y: y }
-    }
+    currentNumVertexes = 3
+    vertexes = spawnPolygonVertexes(currentNumVertexes)
 
     currentPoint = {
         x: random(-1, 1) * width / 2,
@@ -67,16 +81,26 @@ function setup() {
     }
 }
 
+function spawnPolygonVertexes(n) {
+    let vtxs = []
+    for (let i = 0; i < n; i++) {
+        let x = width * 0.4 * cos(TAU / n * i)
+        let y = height * 0.4 * sin(TAU / n * i)
+        vtxs[i] = { x: x, y: y }
+    }
+    return vtxs
+}
+
 function drawControls() {
-    text(divRatioSlider.value(), 300, 20);
+    text(divRatioSlider.value(), 330, 20);
     text("progress: " + round(animationCount * 100.0 / maxAnimationCount) + "%", 10, 50);
 }
 
 function drawPoint() {
     let vertex = random(vertexes)
 
-    let x = currentPoint.x + (vertex.x - currentPoint.x) * (divRatioSlider.value() / 100.0)
-    let y = currentPoint.y + (vertex.y - currentPoint.y) * (divRatioSlider.value() / 100.0)
+    let x = currentPoint.x + (vertex.x - currentPoint.x) * (currentDivRatio / 100.0)
+    let y = currentPoint.y + (vertex.y - currentPoint.y) * (currentDivRatio / 100.0)
 
     point(x, y)
 
