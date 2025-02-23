@@ -1,27 +1,26 @@
-// This program was developed with reference to the following blog post.
-// https://gin-graphic.hatenablog.com/entry/2023/12/20/060000
-
 const bgGrayScaleValue = 230
 const controlHeight = 60
 const maxAnimationCount = 200
 const gapBetweenComponents = 10
+const parentID = 'artwork-canvas'
 
 let canvas
 let buffer
-let vertexes
+let vertices
 let currentPoint
 let divRatioSlider
 let resetButton
 let suspendAndResumeButton
-let numPolygonVertexesSelector
+let numPolygonVerticesSelector
 let animationCount
 let animationRunning
 let currentDivRatio
-let currentNumVertexes
+let currentNumVertices
 
 function setup() {
     const canvasSize = 480
     canvas = createCanvas(canvasSize, canvasSize)
+    canvas.parent(parentID);
     background(bgGrayScaleValue)
 
     buffer = createGraphics(width, height)
@@ -29,23 +28,25 @@ function setup() {
     animationCount = 0
     animationRunning = true
 
-    let nextComponentX = 15
+    let nextComponentX = 10
 
     resetButton = createButton('reset');
-    resetButton.position(nextComponentX, 15);
+    resetButton.parent(parentID)
+    resetButton.position(nextComponentX, 10);
     resetButton.mousePressed(function () {
         animationCount = 0
         background(bgGrayScaleValue)
         animationRunning = true
         currentDivRatio = divRatioSlider.value()
-        currentNumVertexes = parseInt(numPolygonVertexesSelector.value())
-        vertexes = spawnPolygonVertexes(currentNumVertexes)
+        currentNumVertices = parseInt(numPolygonVerticesSelector.value())
+        vertices = spawnPolygonVertices(currentNumVertices)
     });
 
     nextComponentX += resetButton.width + gapBetweenComponents
 
     suspendAndResumeButton = createButton('suspend/resume');
-    suspendAndResumeButton.position(nextComponentX, 15);
+    suspendAndResumeButton.parent(parentID)
+    suspendAndResumeButton.position(nextComponentX, 10);
     suspendAndResumeButton.mousePressed(function () {
         if (animationCount < maxAnimationCount) {
             animationRunning = !animationRunning
@@ -54,26 +55,28 @@ function setup() {
 
     nextComponentX += suspendAndResumeButton.width + gapBetweenComponents
 
-    numPolygonVertexesSelector = createSelect();
-    numPolygonVertexesSelector.position(nextComponentX, 15);
-    numPolygonVertexesSelector.option(3);
-    numPolygonVertexesSelector.option(4);
-    numPolygonVertexesSelector.option(5);
-    numPolygonVertexesSelector.option(6);
-    numPolygonVertexesSelector.option(7);
+    numPolygonVerticesSelector = createSelect();
+    numPolygonVerticesSelector.parent(parentID)
+    numPolygonVerticesSelector.position(nextComponentX, 10);
+    numPolygonVerticesSelector.option(3);
+    numPolygonVerticesSelector.option(4);
+    numPolygonVerticesSelector.option(5);
+    numPolygonVerticesSelector.option(6);
+    numPolygonVerticesSelector.option(7);
 
-    nextComponentX += numPolygonVertexesSelector.width + gapBetweenComponents
+    nextComponentX += numPolygonVerticesSelector.width + gapBetweenComponents
 
     textSize(18);
 
     const defaultDivRatio = 50
     divRatioSlider = createSlider(1, 99, defaultDivRatio, 1);
-    divRatioSlider.position(nextComponentX, 15);
+    divRatioSlider.parent(parentID)
+    divRatioSlider.position(nextComponentX, 10);
     divRatioSlider.style('width', '100px');
     currentDivRatio = defaultDivRatio
 
-    currentNumVertexes = 3
-    vertexes = spawnPolygonVertexes(currentNumVertexes)
+    currentNumVertices = 3
+    vertices = spawnPolygonVertices(currentNumVertices)
 
     currentPoint = {
         x: random(-1, 1) * width / 2,
@@ -81,7 +84,7 @@ function setup() {
     }
 }
 
-function spawnPolygonVertexes(n) {
+function spawnPolygonVertices(n) {
     let vtxs = []
     for (let i = 0; i < n; i++) {
         let x = width * 0.4 * cos(TAU / n * i)
@@ -92,12 +95,12 @@ function spawnPolygonVertexes(n) {
 }
 
 function drawControls() {
-    text(divRatioSlider.value(), 330, 20);
+    text(divRatioSlider.value(), 310, 25);
     text("progress: " + round(animationCount * 100.0 / maxAnimationCount) + "%", 10, 50);
 }
 
 function drawPoint() {
-    let vertex = random(vertexes)
+    let vertex = random(vertices)
 
     let x = currentPoint.x + (vertex.x - currentPoint.x) * (currentDivRatio / 100.0)
     let y = currentPoint.y + (vertex.y - currentPoint.y) * (currentDivRatio / 100.0)

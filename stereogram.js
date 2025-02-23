@@ -1,6 +1,3 @@
-// This program was developed with reference to the following article.
-// https://www.mathartroom.com/stereogram/randomdot_stereogram/
-
 let distVirtualPlaneAndScreen = 500.0;
 let distScreenAndFace = 500.0;
 let distBetweenEyes = 150.0;
@@ -8,9 +5,11 @@ let sphereCenter
 let sphereOrbitRadius
 let leftMarkX, rightMarkX, markY
 let baseDotPosList = []
+const parentID = 'artwork-canvas'
 
 function setup() {
-    createCanvas(500, 600, P2D);
+    canvas = createCanvas(500, 600, P2D);
+    canvas.parent(parentID)
     sphereOrbitRadius = width / 3.0
     sphereCenter = createVector(sphereOrbitRadius, 0, 0)
 
