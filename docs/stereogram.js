@@ -8,13 +8,14 @@ let sphereOrbitRadius
 let leftMarkX, rightMarkX, markY
 let baseDotPosList
 const parentID = 'artwork-canvas'
+const markAreaHeightRatio = 0.1
 
 const s = (p) => {
     function init() {
         sphereOrbitRadius = p.width / 3.0
         sphereCenter = p.createVector(sphereOrbitRadius, 0, 0)
 
-        let virtualPos = p.createVector(0, 100, 0)
+        let virtualPos = p.createVector(0, p.height * 0.12, 0)
         rightMarkX = getProjectedXForRightEye(virtualPos);
         leftMarkX = getProjectedXForLeftEye(virtualPos);
         markY = distScreenAndFace * virtualPos.y / (distScreenAndFace + distVirtualPlaneAndScreen - virtualPos.z);
@@ -22,13 +23,13 @@ const s = (p) => {
         baseDotPosList = []
         for (let i = 0; i < 1000; i++) {
             let iniX = p.random(p.width) - p.width / 2;
-            let iniY = p.random(p.width) - p.width / 2;
+            let iniY = p.random(p.height * (1.0 - markAreaHeightRatio)) - (p.height * (1.0 - markAreaHeightRatio)) / 2;
             p.append(baseDotPosList, [iniX, iniY])
         }
     }
     p.setup = function () {
         let canvasWidth = layout.calcCanvasWidth(p, parentID)
-        let canvas = p.createCanvas(canvasWidth, canvasWidth, p.P2D)
+        let canvas = p.createCanvas(canvasWidth, canvasWidth * (1.0 + markAreaHeightRatio), p.P2D)
         canvas.parent(parentID)
         init()
         p.frameRate(20)
@@ -36,7 +37,7 @@ const s = (p) => {
 
     p.windowResized = function () {
         let canvasWidth = layout.calcCanvasWidth(p, parentID)
-        p.resizeCanvas(canvasWidth, canvasWidth);
+        p.resizeCanvas(canvasWidth, canvasWidth * (1.0 + markAreaHeightRatio));
         init()
     }
 
@@ -57,7 +58,7 @@ const s = (p) => {
         sphereCenter.x = sphereOrbitRadius * p.cos(p.frameCount / 100.0 * p.PI)
         sphereCenter.y = sphereOrbitRadius * p.sin(p.frameCount / 100.0 * p.PI)
 
-        p.translate(0, 320);
+        p.translate(0, p.height * (markAreaHeightRatio + (1.0 - markAreaHeightRatio) / 2));
 
         p.colorMode(p.HSB);
         p.noStroke();
