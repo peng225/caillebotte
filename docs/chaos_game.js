@@ -91,6 +91,9 @@ const s = (p) => {
 
     p.windowResized = function () {
         let canvasWidth = layout.calcCanvasWidth(p, parentID)
+        if (canvasWidth == p.width) {
+            return
+        }
         p.resizeCanvas(canvasWidth, canvasWidth);
         buffer = p.createGraphics(p.width, p.height)
         resetAnimation()
