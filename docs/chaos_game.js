@@ -27,6 +27,7 @@ const s = (p) => {
         currentDivRatio = divRatioSlider.value()
         currentNumVertices = parseInt(numPolygonVerticesSelector.value())
         vertices = spawnPolygonVertices(currentNumVertices)
+        suspendAndResumeButton.html('suspend')
     }
 
     p.setup = function () {
@@ -49,12 +50,17 @@ const s = (p) => {
 
         nextComponentX += resetButton.width + gapBetweenComponents
 
-        suspendAndResumeButton = p.createButton('suspend/resume');
+        suspendAndResumeButton = p.createButton('suspend');
         suspendAndResumeButton.parent(parentID)
         suspendAndResumeButton.position(nextComponentX, 10);
         suspendAndResumeButton.mousePressed(function () {
             if (animationCount < maxAnimationCount) {
                 animationRunning = !animationRunning
+                if (animationRunning) {
+                    suspendAndResumeButton.html('suspend')
+                } else {
+                    suspendAndResumeButton.html('resume')
+                }
             }
         });
 
@@ -110,7 +116,7 @@ const s = (p) => {
     }
 
     function drawControls() {
-        p.text(divRatioSlider.value(), 310, 25);
+        p.text(divRatioSlider.value(), 260, 25);
         p.text("progress: " + p.round(animationCount * 100.0 / maxAnimationCount) + "%", 10, 50);
     }
 
