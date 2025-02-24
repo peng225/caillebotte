@@ -1,4 +1,4 @@
-const minCanvasWidth = 400
+const minCanvasWidth = 300
 const maxCanvasWidth = 500
 
 export function calcCanvasWidth(p, parentID) {

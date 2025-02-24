@@ -37,6 +37,9 @@ const s = (p) => {
 
     p.windowResized = function () {
         let canvasWidth = layout.calcCanvasWidth(p, parentID)
+        if (canvasWidth == p.width) {
+            return
+        }
         p.resizeCanvas(canvasWidth, canvasWidth * (1.0 + markAreaHeightRatio));
         init()
     }
