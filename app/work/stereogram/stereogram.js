@@ -1,5 +1,9 @@
-import * as layout from "./layout.js"
+import * as util from "../util.js"
 
+const markAreaHeightRatio = 0.1
+const parentIDKey = 'artworkCanvas'
+
+let parentID
 let distVirtualPlaneAndScreen = 500.0;
 let distScreenAndFace = 500.0;
 let distBetweenEyes = 150.0;
@@ -7,8 +11,6 @@ let sphereCenter
 let sphereOrbitRadius
 let leftMarkX, rightMarkX, markY
 let baseDotPosList
-const parentID = 'artwork-canvas'
-const markAreaHeightRatio = 0.1
 
 const s = (p) => {
     function init() {
@@ -28,7 +30,8 @@ const s = (p) => {
         }
     }
     p.setup = function () {
-        let canvasWidth = layout.calcCanvasWidth(p, parentID)
+        parentID = p.select('[id*="' + parentIDKey + '"]').id()
+        let canvasWidth = util.calcCanvasWidth(p, parentID)
         let canvas = p.createCanvas(canvasWidth, canvasWidth * (1.0 + markAreaHeightRatio), p.P2D)
         canvas.parent(parentID)
         init()
@@ -36,7 +39,7 @@ const s = (p) => {
     };
 
     p.windowResized = function () {
-        let canvasWidth = layout.calcCanvasWidth(p, parentID)
+        let canvasWidth = util.calcCanvasWidth(p, parentID)
         if (canvasWidth == p.width) {
             return
         }
@@ -145,4 +148,6 @@ const s = (p) => {
     }
 };
 
-let myp5 = new p5(s);
+export function spawn() {
+    let myp5 = new p5(s);
+}
