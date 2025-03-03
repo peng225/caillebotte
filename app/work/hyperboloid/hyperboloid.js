@@ -1,10 +1,11 @@
-import * as layout from "./layout.js"
+import * as util from "../util.js"
 
 const numLines = 50;
-const parentID = 'artwork-canvas'
+const parentIDKey = 'artworkCanvas'
+
+let parentID
 let lineProperties
 let currentPos
-
 
 class LineProperty {
     constructor(h, s, b) {
@@ -28,7 +29,8 @@ class LineProperty {
 
 const s = (p) => {
     p.setup = function () {
-        let canvasWidth = layout.calcCanvasWidth(p, parentID)
+        parentID = p.select('[id*="' + parentIDKey + '"]').id()
+        let canvasWidth = util.calcCanvasWidth(p, parentID)
         let canvas = p.createCanvas(canvasWidth, canvasWidth, p.WEBGL)
         canvas.parent(parentID)
 
@@ -40,7 +42,7 @@ const s = (p) => {
     };
 
     p.windowResized = function () {
-        let canvasWidth = layout.calcCanvasWidth(p, parentID)
+        let canvasWidth = util.calcCanvasWidth(p, parentID)
         if (canvasWidth == p.width) {
             return
         }
@@ -69,4 +71,6 @@ const s = (p) => {
     };
 };
 
-let myp5 = new p5(s);
+export function spawn() {
+    let myp5 = new p5(s);
+}

@@ -1,11 +1,12 @@
-import * as layout from "./layout.js"
+import * as util from "../util.js"
 
 const bgGrayScaleValue = 230
 const controlHeight = 60
 const maxAnimationCount = 200
 const gapBetweenComponents = 10
-const parentID = 'artwork-canvas'
+const parentIDKey = 'artworkCanvas'
 
+let parentID
 let canvas
 let buffer
 let vertices
@@ -31,7 +32,8 @@ const s = (p) => {
     }
 
     p.setup = function () {
-        let canvasWidth = layout.calcCanvasWidth(p, parentID)
+        parentID = p.select('[id*="' + parentIDKey + '"]').id()
+        let canvasWidth = util.calcCanvasWidth(p, parentID)
         canvas = p.createCanvas(canvasWidth, canvasWidth)
         canvas.parent(parentID);
         p.background(bgGrayScaleValue)
@@ -96,7 +98,7 @@ const s = (p) => {
     }
 
     p.windowResized = function () {
-        let canvasWidth = layout.calcCanvasWidth(p, parentID)
+        let canvasWidth = util.calcCanvasWidth(p, parentID)
         if (canvasWidth == p.width) {
             return
         }
@@ -164,4 +166,6 @@ const s = (p) => {
     }
 };
 
-let myp5 = new p5(s);
+export function spawn() {
+    let myp5 = new p5(s);
+}

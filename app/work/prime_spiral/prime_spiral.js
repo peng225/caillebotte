@@ -1,15 +1,17 @@
-import * as layout from "./layout.js"
+import * as util from "../util.js"
 
-const parentID = 'artwork-canvas'
 const maxNumber = 2000
+const parentIDKey = 'artworkCanvas'
+
+let parentID
 let scale
 let primes
 let currentNumber
 
-
 const s = (p) => {
     p.setup = function () {
-        let canvasWidth = layout.calcCanvasWidth(p, parentID)
+        parentID = p.select('[id*="' + parentIDKey + '"]').id()
+        let canvasWidth = util.calcCanvasWidth(p, parentID)
         let canvas = p.createCanvas(canvasWidth, canvasWidth, p.P2D)
         canvas.parent(parentID)
         p.frameRate(30)
@@ -21,7 +23,7 @@ const s = (p) => {
     };
 
     p.windowResized = function () {
-        let canvasWidth = layout.calcCanvasWidth(p, parentID)
+        let canvasWidth = util.calcCanvasWidth(p, parentID)
         if (canvasWidth == p.width) {
             return
         }
@@ -89,4 +91,6 @@ function isPrime(n) {
     return true;
 }
 
-let myp5 = new p5(s);
+export function spawn() {
+    let myp5 = new p5(s);
+}

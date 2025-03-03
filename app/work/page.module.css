@@ -1,0 +1,56 @@
+.artwork {
+    background-color: #fff;
+    padding: 20px;
+    margin: 15px auto;
+    max-width: 900px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.artwork h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.artwork p {
+    margin: 20px 0px;
+}
+
+.artwork img {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 20px;
+}
+
+.navigationButtons {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.navigationButtons .button {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: background-color 0.1s;
+}
+
+.navigationButtons .button:hover {
+    background-color: #ff9800;
+}
+
+#artworkCanvas {
+    position: relative;
+}
+
+.references {
+    margin-top: 10px;
+}
+
+.references ul {
+    margin: 10px 20px;
+}
