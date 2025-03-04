@@ -92,5 +92,5 @@ function isPrime(n) {
 }
 
 export function spawn() {
-    let myp5 = new p5(s);
+    new p5(s);
 }
