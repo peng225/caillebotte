@@ -10,7 +10,12 @@ import thumb_prime_spiral from '../public/images/prime_spiral.png'
 export default function Home() {
   return (
     <main>
-      <section className={styles.hero}>
+      <section className={styles.hero} style={{
+        background: `url(${thumb_chaos_game.src})`,
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center center",
+        backgroundSize: "cover",
+      }}>
         <div className={styles.overlay}>
           <h2>Welcome to the world of mathematical art</h2>
           <p>Enjoy the harmony of mathematics, computers, and art.</p>
