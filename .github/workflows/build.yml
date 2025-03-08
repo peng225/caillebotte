@@ -1,4 +1,4 @@
-name: Run linter
+name: Run build
 
 on:
   pull_request:
@@ -8,7 +8,7 @@ permissions:
   contents: read
 
 jobs:
-  lint:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -47,5 +47,5 @@ jobs:
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
-      - name: Run linter
-        run: ${{ steps.detect-package-manager.outputs.runner }} next lint
+      - name: Run build
+        run: ${{ steps.detect-package-manager.outputs.runner }} next build
