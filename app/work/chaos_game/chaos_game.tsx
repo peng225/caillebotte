@@ -28,7 +28,7 @@ const s = (p: p5) => {
     let animationRunning: boolean
     let currentDivRatio: number
     let currentNumVertices: number
-    
+
     function resetAnimation() {
         animationCount = 0
         p.background(bgGrayScaleValue)
@@ -188,10 +188,8 @@ export default function Kick() {
             p5Instance = new p5(s)
         }
         return () => {
-            if (p5Instance !== undefined) {
-                p5Instance.remove();
-                p5Instance = undefined;
-            }
+            p5Instance?.remove();
+            p5Instance = undefined;
         };
     }, [pathname])
     return (
