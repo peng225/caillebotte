@@ -1,20 +1,23 @@
 'use client';
 
-import * as work from "./chaos_game.js"
-import Load from "../p5_loader"
-
 import styles from "../page.module.css";
 import Link from 'next/link';
+import dynamic from 'next/dynamic'
+
+const Kick = dynamic(() => import('./chaos_game'), {
+  loading: () => <p>Loading...</p>,
+  ssr: false,
+})
 
 export default function ChaosGame() {
   return (
     <main>
-      <Load f={() => { work.spawn() }} />
       <section className={styles.artwork}>
         <h2>Chaos Game</h2>
         <p>This work is ...</p>
 
         <div id={styles.artworkCanvas}></div>
+        <Kick />
 
         <div className={styles.references}>
           <h3>References</h3>

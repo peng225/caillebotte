@@ -1,39 +1,53 @@
-import * as util from "../util.js"
+import * as util from "../util"
+import p5 from "p5";
 
-const bgGrayScaleValue = 230
-const controlHeight = 60
-const maxAnimationCount = 200
-const gapBetweenComponents = 10
-const parentIDKey = 'artworkCanvas'
+import { useEffect } from 'react'
+import { usePathname } from 'next/navigation'
 
-let parentID
-let canvas
-let buffer
-let vertices
-let currentPoint
-let divRatioSlider
-let resetButton
-let suspendAndResumeButton
-let numPolygonVerticesSelector
-let animationCount
-let animationRunning
-let currentDivRatio
-let currentNumVertices
+interface SelectElement extends p5.Element {
+    option: (value: string) => void;
+}
 
-const s = (p) => {
+const s = (p: p5) => {
+    const bgGrayScaleValue = 230
+    const controlHeight = 60
+    const maxAnimationCount = 200
+    const gapBetweenComponents = 10
+    const parentIDKey = 'artworkCanvas'
+
+    let parentID: string
+    let canvas: p5.Element
+    let buffer: p5.Graphics
+    let vertices: { x: number, y: number }[]
+    let currentPoint: { x: number, y: number }
+    let divRatioSlider: p5.Element
+    let resetButton: p5.Element
+    let suspendAndResumeButton: p5.Element
+    let numPolygonVerticesSelector: SelectElement
+    let animationCount: number
+    let animationRunning: boolean
+    let currentDivRatio: number
+    let currentNumVertices: number
+    
     function resetAnimation() {
         animationCount = 0
         p.background(bgGrayScaleValue)
         animationRunning = true
-        currentDivRatio = divRatioSlider.value()
-        currentNumVertices = parseInt(numPolygonVerticesSelector.value())
+        currentDivRatio = parseInt(divRatioSlider.value().toString())
+        currentNumVertices = parseInt(numPolygonVerticesSelector.value().toString())
         vertices = spawnPolygonVertices(currentNumVertices)
         suspendAndResumeButton.html('suspend')
     }
 
     p.setup = function () {
-        parentID = p.select('[id*="' + parentIDKey + '"]').id()
-        let canvasWidth = util.calcCanvasWidth(p, parentID)
+        const tmpParentID = p.select('[id*="' + parentIDKey + '"]')?.id()
+        if (tmpParentID == null) {
+            console.log("Failed to get the parentID.")
+            p.noLoop()
+            return
+        }
+        parentID = tmpParentID
+        const canvasWidth = util.calcCanvasWidth(p, parentID)
         canvas = p.createCanvas(canvasWidth, canvasWidth)
         canvas.parent(parentID);
         p.background(bgGrayScaleValue)
@@ -68,14 +82,14 @@ const s = (p) => {
 
         nextComponentX += suspendAndResumeButton.width + gapBetweenComponents
 
-        numPolygonVerticesSelector = p.createSelect();
+        numPolygonVerticesSelector = p.createSelect() as SelectElement;
         numPolygonVerticesSelector.parent(parentID)
         numPolygonVerticesSelector.position(nextComponentX, 10);
-        numPolygonVerticesSelector.option(3);
-        numPolygonVerticesSelector.option(4);
-        numPolygonVerticesSelector.option(5);
-        numPolygonVerticesSelector.option(6);
-        numPolygonVerticesSelector.option(7);
+        numPolygonVerticesSelector.option("3");
+        numPolygonVerticesSelector.option("4");
+        numPolygonVerticesSelector.option("5");
+        numPolygonVerticesSelector.option("6");
+        numPolygonVerticesSelector.option("7");
 
         nextComponentX += numPolygonVerticesSelector.width + gapBetweenComponents
 
@@ -98,7 +112,7 @@ const s = (p) => {
     }
 
     p.windowResized = function () {
-        let canvasWidth = util.calcCanvasWidth(p, parentID)
+        const canvasWidth = util.calcCanvasWidth(p, parentID)
         if (canvasWidth == p.width) {
             return
         }
@@ -107,11 +121,11 @@ const s = (p) => {
         resetAnimation()
     }
 
-    function spawnPolygonVertices(n) {
-        let vtxs = []
+    function spawnPolygonVertices(n: number): { x: number, y: number }[] {
+        const vtxs: { x: number, y: number }[] = []
         for (let i = 0; i < n; i++) {
-            let x = p.width * 0.4 * p.cos(p.TAU / n * i)
-            let y = p.height * 0.4 * p.sin(p.TAU / n * i)
+            const x = p.width * 0.4 * p.cos(p.TAU / n * i)
+            const y = p.height * 0.4 * p.sin(p.TAU / n * i)
             vtxs[i] = { x: x, y: y }
         }
         return vtxs
@@ -123,10 +137,10 @@ const s = (p) => {
     }
 
     function drawPoint() {
-        let vertex = p.random(vertices)
+        const vertex = p.random(vertices)
 
-        let x = currentPoint.x + (vertex.x - currentPoint.x) * (currentDivRatio / 100.0)
-        let y = currentPoint.y + (vertex.y - currentPoint.y) * (currentDivRatio / 100.0)
+        const x = currentPoint.x + (vertex.x - currentPoint.x) * (currentDivRatio / 100.0)
+        const y = currentPoint.y + (vertex.y - currentPoint.y) * (currentDivRatio / 100.0)
 
         p.point(x, y)
 
@@ -166,6 +180,21 @@ const s = (p) => {
     }
 };
 
-export function spawn() {
-    new p5(s);
+let p5Instance: p5 | undefined = undefined;
+export default function Kick() {
+    const pathname = usePathname()
+    useEffect(() => {
+        if (p5Instance === undefined) {
+            p5Instance = new p5(s)
+        }
+        return () => {
+            if (p5Instance !== undefined) {
+                p5Instance.remove();
+                p5Instance = undefined;
+            }
+        };
+    }, [pathname])
+    return (
+        <></>
+    )
 }

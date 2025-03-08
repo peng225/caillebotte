@@ -1,45 +1,56 @@
-import * as util from "../util.js"
+import * as util from "../util"
+import p5 from "p5";
 
-const markAreaHeightRatio = 0.1
-const parentIDKey = 'artworkCanvas'
+import { useEffect } from 'react'
+import { usePathname } from 'next/navigation'
 
-let parentID
-let distVirtualPlaneAndScreen = 500.0;
-let distScreenAndFace = 500.0;
-let distBetweenEyes = 150.0;
-let sphereCenter
-let sphereOrbitRadius
-let leftMarkX, rightMarkX, markY
-let baseDotPosList
+const s = (p: p5) => {
+    const markAreaHeightRatio = 0.1
+    const distVirtualPlaneAndScreen = 500.0;
+    const distScreenAndFace = 500.0;
+    const distBetweenEyes = 150.0;
+    const parentIDKey = 'artworkCanvas'
 
-const s = (p) => {
+    let parentID: string
+    let sphereCenter: p5.Vector
+    let sphereOrbitRadius: number
+    let leftMarkX: number
+    let rightMarkX: number
+    let markY: number
+    let baseDotPosList: {x: number, y: number}[]
     function init() {
         sphereOrbitRadius = p.width / 3.0
         sphereCenter = p.createVector(sphereOrbitRadius, 0, 0)
 
-        let virtualPos = p.createVector(0, p.height * 0.12, 0)
+        const virtualPos = p.createVector(0, p.height * 0.12, 0)
         rightMarkX = getProjectedXForRightEye(virtualPos);
         leftMarkX = getProjectedXForLeftEye(virtualPos);
         markY = distScreenAndFace * virtualPos.y / (distScreenAndFace + distVirtualPlaneAndScreen - virtualPos.z);
 
         baseDotPosList = []
         for (let i = 0; i < 1000; i++) {
-            let iniX = p.random(p.width) - p.width / 2;
-            let iniY = p.random(p.height * (1.0 - markAreaHeightRatio)) - (p.height * (1.0 - markAreaHeightRatio)) / 2;
-            p.append(baseDotPosList, [iniX, iniY])
+            const iniX = p.random(p.width) - p.width / 2;
+            const iniY = p.random(p.height * (1.0 - markAreaHeightRatio)) - (p.height * (1.0 - markAreaHeightRatio)) / 2;
+            p.append(baseDotPosList, { x: iniX, y: iniY })
         }
     }
     p.setup = function () {
-        parentID = p.select('[id*="' + parentIDKey + '"]').id()
-        let canvasWidth = util.calcCanvasWidth(p, parentID)
-        let canvas = p.createCanvas(canvasWidth, canvasWidth * (1.0 + markAreaHeightRatio), p.P2D)
+        const tmpParentID = p.select('[id*="' + parentIDKey + '"]')?.id()
+        if (tmpParentID == null) {
+            console.log("Failed to get the parentID.")
+            p.noLoop()
+            return
+        }
+        parentID = tmpParentID
+        const canvasWidth = util.calcCanvasWidth(p, parentID)
+        const canvas = p.createCanvas(canvasWidth, canvasWidth * (1.0 + markAreaHeightRatio), p.P2D)
         canvas.parent(parentID)
         init()
         p.frameRate(20)
     };
 
     p.windowResized = function () {
-        let canvasWidth = util.calcCanvasWidth(p, parentID)
+        const canvasWidth = util.calcCanvasWidth(p, parentID)
         if (canvasWidth == p.width) {
             return
         }
@@ -72,13 +83,13 @@ const s = (p) => {
             // Select a random color.
             p.fill(p.round(360 * i / baseDotPosList.length), 100, 1000);
 
-            let screenX = baseDotPosList[i][0];
-            let screenY = baseDotPosList[i][1];
+            let screenX = baseDotPosList[i].x;
+            const screenY = baseDotPosList[i].y;
             p.circle(screenX, screenY, 5);
             while (true) {
                 // See the point (screenX, screenY) from the left eye.
-                let virtualPos = getVirtualPos(screenX, screenY, -distBetweenEyes, sphereCenter);
-                let projectedXForRightEye = getProjectedXForRightEye(virtualPos);
+                const virtualPos = getVirtualPos(screenX, screenY, -distBetweenEyes, sphereCenter);
+                const projectedXForRightEye = getProjectedXForRightEye(virtualPos);
                 if (p.abs(projectedXForRightEye) < p.width / 2.0) {
                     p.circle(projectedXForRightEye, screenY, 5);
                     screenX = projectedXForRightEye;
@@ -87,11 +98,11 @@ const s = (p) => {
                 }
             }
 
-            screenX = baseDotPosList[i][0];
+            screenX = baseDotPosList[i].x;
             while (true) {
                 // See the point (screenX, screenY) from the left eye.
-                let virtualPos = getVirtualPos(screenX, screenY, distBetweenEyes, sphereCenter);
-                let projectedXForLeftEye = getProjectedXForLeftEye(virtualPos);
+                const virtualPos = getVirtualPos(screenX, screenY, distBetweenEyes, sphereCenter);
+                const projectedXForLeftEye = getProjectedXForLeftEye(virtualPos);
                 if (p.abs(projectedXForLeftEye) < p.width / 2.0) {
                     p.circle(projectedXForLeftEye, screenY, 5);
                     screenX = projectedXForLeftEye;
@@ -103,28 +114,28 @@ const s = (p) => {
     };
 
     function getVirtualPos(
-        screenX,
-        screenY,
-        eyeX,
-        sphereCenter
+        screenX: number,
+        screenY: number,
+        eyeX: number,
+        sphereCenter: p5.Vector
     ) {
-        let face2ScreenAndFace2VirtualPlaneRatio = (distScreenAndFace + distVirtualPlaneAndScreen) / distScreenAndFace;
-        let virtualPlaneX = eyeX + face2ScreenAndFace2VirtualPlaneRatio * (screenX - eyeX);
-        let virtualPlaneY = face2ScreenAndFace2VirtualPlaneRatio * screenY;
+        const face2ScreenAndFace2VirtualPlaneRatio = (distScreenAndFace + distVirtualPlaneAndScreen) / distScreenAndFace;
+        const virtualPlaneX = eyeX + face2ScreenAndFace2VirtualPlaneRatio * (screenX - eyeX);
+        const virtualPlaneY = face2ScreenAndFace2VirtualPlaneRatio * screenY;
 
-        let direction = p.createVector(screenX - virtualPlaneX, screenY - virtualPlaneY, distVirtualPlaneAndScreen)
+        const direction = p.createVector(screenX - virtualPlaneX, screenY - virtualPlaneY, distVirtualPlaneAndScreen)
 
         const r = p.width * 0.3
 
         // Get the intersection of the line and the sphere.
         // ref. https://chatgpt.com/share/67b5edf4-73b4-8002-a48c-bf76ef71cb5d
-        let A = direction.x ** 2 + direction.y ** 2 + direction.z ** 2;
-        let B = 2 * (
+        const A = direction.x ** 2 + direction.y ** 2 + direction.z ** 2;
+        const B = 2 * (
             direction.x * (virtualPlaneX - sphereCenter.x)
             + direction.y * (virtualPlaneY - sphereCenter.y)
             - direction.z * sphereCenter.z
         );
-        let C = (virtualPlaneX - sphereCenter.x) ** 2 + (virtualPlaneY - sphereCenter.y) ** 2 + sphereCenter.z ** 2 - r ** 2;
+        const C = (virtualPlaneX - sphereCenter.x) ** 2 + (virtualPlaneY - sphereCenter.y) ** 2 + sphereCenter.z ** 2 - r ** 2;
 
         // If the intersection of the line and the sphere does not exist,
         // return the intersection of the line and the virtual plane.
@@ -132,22 +143,37 @@ const s = (p) => {
             return p.createVector(virtualPlaneX, virtualPlaneY, 0);
         }
 
-        let t = (-B + p.sqrt(B ** 2 - 4 * A * C)) / (2 * A);
+        const t = (-B + p.sqrt(B ** 2 - 4 * A * C)) / (2 * A);
 
         return p.createVector(virtualPlaneX + direction.x * t, virtualPlaneY + direction.y * t, direction.z * t);
     }
 
-    function getProjectedXForRightEye(virtualPos) {
+    function getProjectedXForRightEye(virtualPos: p5.Vector) {
         return (distScreenAndFace * virtualPos.x - distBetweenEyes * virtualPos.z + distBetweenEyes * distVirtualPlaneAndScreen)
             / (distScreenAndFace + distVirtualPlaneAndScreen - virtualPos.z)
     }
 
-    function getProjectedXForLeftEye(virtualPos) {
+    function getProjectedXForLeftEye(virtualPos: p5.Vector) {
         return (distScreenAndFace * virtualPos.x + distBetweenEyes * virtualPos.z - distBetweenEyes * distVirtualPlaneAndScreen)
             / (distScreenAndFace + distVirtualPlaneAndScreen - virtualPos.z)
     }
 };
 
-export function spawn() {
-    new p5(s);
+let p5Instance: p5 | undefined = undefined;
+export default function Kick() {
+    const pathname = usePathname()
+    useEffect(() => {
+        if (p5Instance === undefined) {
+            p5Instance = new p5(s)
+        }
+        return () => {
+            if (p5Instance !== undefined) {
+                p5Instance.remove();
+                p5Instance = undefined;
+            }
+        };
+    }, [pathname])
+    return (
+        <></>
+    )
 }
