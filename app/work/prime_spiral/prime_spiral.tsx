@@ -1,18 +1,27 @@
-import * as util from "../util.js"
+import * as util from "../util"
+import p5 from "p5";
 
-const maxNumber = 2000
-const parentIDKey = 'artworkCanvas'
+import { useEffect } from 'react'
+import { usePathname } from 'next/navigation'
 
-let parentID
-let scale
-let primes
-let currentNumber
+const s = (p: p5) => {
+    const maxNumber = 2000
+    const parentIDKey = 'artworkCanvas'
 
-const s = (p) => {
+    let parentID: string
+    let scale: number
+    let primes: number[]
+    let currentNumber: number
     p.setup = function () {
-        parentID = p.select('[id*="' + parentIDKey + '"]').id()
-        let canvasWidth = util.calcCanvasWidth(p, parentID)
-        let canvas = p.createCanvas(canvasWidth, canvasWidth, p.P2D)
+        const tmpParentID = p.select('[id*="' + parentIDKey + '"]')?.id()
+        if (tmpParentID == null) {
+            console.log("Failed to get the parentID.")
+            p.noLoop()
+            return
+        }
+        parentID = tmpParentID
+        const canvasWidth = util.calcCanvasWidth(p, parentID)
+        const canvas = p.createCanvas(canvasWidth, canvasWidth, p.P2D)
         canvas.parent(parentID)
         p.frameRate(30)
         p.textSize(18)
@@ -23,7 +32,7 @@ const s = (p) => {
     };
 
     p.windowResized = function () {
-        let canvasWidth = util.calcCanvasWidth(p, parentID)
+        const canvasWidth = util.calcCanvasWidth(p, parentID)
         if (canvasWidth == p.width) {
             return
         }
@@ -53,8 +62,8 @@ const s = (p) => {
 
         p.fill(0);
         for (let i = primes.length - 1; i >= 0; i--) {
-            let circleX = scale * primes[i] * p.cos(primes[i])
-            let circleY = scale * primes[i] * p.sin(primes[i])
+            const circleX = scale * primes[i] * p.cos(primes[i])
+            const circleY = scale * primes[i] * p.sin(primes[i])
             if (p.mouseX != 0 && p.mouseY != 0 &&
                 p.dist(circleX, circleY, p.mouseX - p.width / 2, p.mouseY - p.height / 2) <= diameter) {
                 let textX = circleX + 20
@@ -72,7 +81,7 @@ const s = (p) => {
     };
 };
 
-function isPrime(n) {
+function isPrime(n: number) {
     if (n < 2) {
         return false;
     }
@@ -91,6 +100,21 @@ function isPrime(n) {
     return true;
 }
 
-export function spawn() {
-    new p5(s);
+let p5Instance: p5 | undefined = undefined;
+export default function Kick() {
+    const pathname = usePathname()
+    useEffect(() => {
+        if (p5Instance === undefined) {
+            p5Instance = new p5(s)
+        }
+        return () => {
+            if (p5Instance !== undefined) {
+                p5Instance.remove();
+                p5Instance = undefined;
+            }
+        };
+    }, [pathname])
+    return (
+        <></>
+    )
 }

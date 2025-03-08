@@ -1,14 +1,15 @@
-import * as util from "../util.js"
+import * as util from "../util"
+import p5 from "p5";
 
-const numLines = 50;
-const parentIDKey = 'artworkCanvas'
-
-let parentID
-let lineProperties
-let currentPos
+import { useEffect } from 'react'
+import { usePathname } from 'next/navigation'
 
 class LineProperty {
-    constructor(h, s, b) {
+    h: number
+    s: number
+    b: number
+    alpha: number
+    constructor(h: number, s: number, b: number) {
         this.h = h
         this.s = s
         this.b = b
@@ -27,11 +28,24 @@ class LineProperty {
     }
 }
 
-const s = (p) => {
+const s = (p: p5) => {
+    const numLines = 50;
+    const parentIDKey = 'artworkCanvas'
+
+    let parentID: string
+    let lineProperties: LineProperty[]
+    let currentPos: number
+
     p.setup = function () {
-        parentID = p.select('[id*="' + parentIDKey + '"]').id()
-        let canvasWidth = util.calcCanvasWidth(p, parentID)
-        let canvas = p.createCanvas(canvasWidth, canvasWidth, p.WEBGL)
+        const tmpParentID = p.select('[id*="' + parentIDKey + '"]')?.id()
+        if (tmpParentID == null) {
+            console.log("Failed to get the parentID.")
+            p.noLoop()
+            return
+        }
+        parentID = tmpParentID
+        const canvasWidth = util.calcCanvasWidth(p, parentID)
+        const canvas = p.createCanvas(canvasWidth, canvasWidth, p.WEBGL)
         canvas.parent(parentID)
 
         lineProperties = []
@@ -42,7 +56,7 @@ const s = (p) => {
     };
 
     p.windowResized = function () {
-        let canvasWidth = util.calcCanvasWidth(p, parentID)
+        const canvasWidth = util.calcCanvasWidth(p, parentID)
         if (canvasWidth == p.width) {
             return
         }
@@ -71,6 +85,21 @@ const s = (p) => {
     };
 };
 
-export function spawn() {
-    new p5(s);
+let p5Instance: p5 | undefined = undefined;
+export default function Kick() {
+    const pathname = usePathname()
+    useEffect(() => {
+        if (p5Instance === undefined) {
+            p5Instance = new p5(s)
+        }
+        return () => {
+            if (p5Instance !== undefined) {
+                p5Instance.remove();
+                p5Instance = undefined;
+            }
+        };
+    }, [pathname])
+    return (
+        <></>
+    )
 }
