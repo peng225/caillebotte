@@ -6,6 +6,7 @@ import thumb_chaos_game from '../public/images/chaos_game.png'
 import thumb_stereogram from '../public/images/stereogram.png'
 import thumb_hyperboloid from '../public/images/hyperboloid.png'
 import thumb_prime_spiral from '../public/images/prime_spiral.png'
+import thumb_voronoi_diagram from '../public/images/voronoi_diagram.png'
 
 export default function Home() {
   return (
@@ -46,6 +47,12 @@ export default function Home() {
             <Link href={"/work/prime_spiral"}>
               <Image src={thumb_prime_spiral} alt="Prime Spiral" />
               <p>Prime Spiral</p>
+            </Link>
+          </div>
+          <div className={styles.artCard}>
+            <Link href={"/work/voronoi_diagram"}>
+              <Image src={thumb_voronoi_diagram} alt="Voronoi Diagram" />
+              <p>Voronoi Diagram</p>
             </Link>
           </div>
         </div>
