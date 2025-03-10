@@ -22,6 +22,7 @@ export default function Hyperboloid() {
         <div className={styles.navigationButtons}>
           <Link href={"/work/hyperboloid"} className={styles.button}>Prev</Link>
           <Link href={"/"} className={styles.button}>Top</Link>
+          <Link href={"/work/voronoi_diagram"} className={styles.button}>Next</Link>
         </div>
       </section>
     </main>
