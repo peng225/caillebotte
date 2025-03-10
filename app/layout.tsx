@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from 'next/link';
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -26,7 +27,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <header>
-          <h1>Caillebotte - The Mathematical Art Gallery</h1>
+          <h1>
+            <Link href={"/"}>
+              Caillebotte - The Mathematical Art Gallery
+            </Link>
+          </h1>
         </header>
         {children}
         <footer>
