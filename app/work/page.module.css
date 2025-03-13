@@ -23,24 +23,46 @@
     margin-bottom: 20px;
 }
 
-.navigationButtons {
+.pagination {
+    padding: 20px 0px;
     display: flex;
     justify-content: center;
-    margin-top: 30px;
+    text-align: center;
 }
 
-.navigationButtons .button {
-    background-color: #333;
-    color: #fff;
-    padding: 10px 20px;
+.pagination ul {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    list-style: none;
+    margin: 0 1px;
+}
+
+.pagination li {
+    margin: 0 1px;
+    background-color: #eee;
+    color: black;
+}
+
+.pagination .dots {
+    padding: 0.5rem 0.7rem;
+}
+
+.pagination li a {
+    padding: 0.5rem 0.7rem;
     text-decoration: none;
-    border-radius: 5px;
-    font-size: 1rem;
-    transition: background-color 0.1s;
+    display: inline-block;
 }
 
-.navigationButtons .button:hover {
-    background-color: #ff9800;
+.pagination ul li .focused {
+    margin: 0 1px;
+    display: inline-block;
+    background-color: gray;
+    color: white;
+}
+
+.pagination ul li a:hover {
+    background-color: #ddd;
 }
 
 #artworkCanvas {

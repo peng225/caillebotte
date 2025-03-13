@@ -1,5 +1,7 @@
 'use client';
 
+import Pagination from "../pagination";
+
 import styles from "../page.module.css";
 import Link from 'next/link';
 import dynamic from 'next/dynamic'
@@ -30,10 +32,7 @@ export default function ChaosGame() {
           </ul>
         </div>
 
-        <div className={styles.navigationButtons}>
-          <Link href={"/"} className={styles.button}>Top</Link>
-          <Link href={"/work/stereogram"} className={styles.button}>Next</Link>
-        </div>
+        <Pagination currentID={0} />
       </section>
     </main>
   );

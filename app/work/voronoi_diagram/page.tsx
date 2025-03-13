@@ -1,5 +1,7 @@
 'use client';
 
+import Pagination from "../pagination";
+
 import styles from "../page.module.css";
 import Link from 'next/link';
 import dynamic from 'next/dynamic'
@@ -30,10 +32,7 @@ export default function VoronoiDiagram() {
           </ul>
         </div>
 
-        <div className={styles.navigationButtons}>
-          <Link href={"/work/prime_spiral"} className={styles.button}>Prev</Link>
-          <Link href={"/"} className={styles.button}>Top</Link>
-        </div>
+        <Pagination currentID={4} />
       </section>
     </main>
   );
