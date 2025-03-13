@@ -1,5 +1,7 @@
 'use client';
 
+import Pagination from "../pagination";
+
 import styles from "../page.module.css";
 import Link from 'next/link';
 import dynamic from 'next/dynamic'
@@ -30,11 +32,7 @@ export default function Stereogram() {
           </ul>
         </div>
 
-        <div className={styles.navigationButtons}>
-          <Link href={"/work/chaos_game"} className={styles.button}>Prev</Link>
-          <Link href={"/"} className={styles.button}>Top</Link>
-          <Link href={"/work/hyperboloid"} className={styles.button}>Next</Link>
-        </div>
+        <Pagination currentID={1} />
       </section>
     </main>
   );

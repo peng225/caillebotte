@@ -1,7 +1,8 @@
 'use client';
 
+import Pagination from "../pagination";
+
 import styles from "../page.module.css";
-import Link from 'next/link';
 import dynamic from 'next/dynamic'
 
 const Kick = dynamic(() => import('./prime_spiral'), {
@@ -19,11 +20,7 @@ export default function Hyperboloid() {
         <div id={styles.artworkCanvas}></div>
         <Kick />
 
-        <div className={styles.navigationButtons}>
-          <Link href={"/work/hyperboloid"} className={styles.button}>Prev</Link>
-          <Link href={"/"} className={styles.button}>Top</Link>
-          <Link href={"/work/voronoi_diagram"} className={styles.button}>Next</Link>
-        </div>
+        <Pagination currentID={3} />
       </section>
     </main>
   );
