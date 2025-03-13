@@ -27,11 +27,17 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <header>
-          <h1>
-            <Link href={"/"}>
-              Caillebotte - The Mathematical Art Gallery
-            </Link>
-          </h1>
+          <div className="headerContainer">
+            <h1>
+              <Link href={"/"}>
+                Caillebotte
+              </Link>
+            </h1>
+            <nav>
+              <Link href={"/"}>Home</Link>
+              <Link href={"https://github.com/peng225/caillebotte"} target="_blank">GitHub</Link>
+            </nav>
+          </div>
         </header>
         {children}
         <footer>
