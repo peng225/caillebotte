@@ -7,6 +7,7 @@ import thumb_stereogram from '../public/images/stereogram.png'
 import thumb_hyperboloid from '../public/images/hyperboloid.png'
 import thumb_prime_spiral from '../public/images/prime_spiral.png'
 import thumb_voronoi_diagram from '../public/images/voronoi_diagram.png'
+import thumb_golden_angle from '../public/images/golden_angle.png'
 
 export default function Home() {
   return (
@@ -53,6 +54,12 @@ export default function Home() {
             <Link href={"/work/voronoi_diagram"}>
               <Image src={thumb_voronoi_diagram} alt="Voronoi Diagram" />
               <p>Voronoi Diagram</p>
+            </Link>
+          </div>
+          <div className={styles.artCard}>
+            <Link href={"/work/golden_angle"}>
+              <Image src={thumb_golden_angle} alt="Golden Angle" />
+              <p>Golden Angle</p>
             </Link>
           </div>
         </div>
