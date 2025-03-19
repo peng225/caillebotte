@@ -12,6 +12,7 @@ const pageNames = new Array<string>(
     "prime_spiral",
     "voronoi_diagram",
     "golden_angle",
+    "koch_curve",
 )
 
 export default function Pagination(props: Props) {
