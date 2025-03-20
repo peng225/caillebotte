@@ -76,7 +76,7 @@ const s = (p: p5) => {
     }
 
     p.mousePressed = function () {
-        if (outOfButtonRegion() && inCanvas()) {
+        if (outOfButtonRegion() && util.cursorOnCanvas(p)) {
             points.push([p.mouseX, p.mouseY]);
         }
         p.redraw();
@@ -85,11 +85,6 @@ const s = (p: p5) => {
     function outOfButtonRegion(): boolean {
         return p.mouseX < buttonX || p.mouseX > buttonX + resetButton.width ||
             p.mouseY < buttonY || p.mouseY > buttonY + resetButton.height
-    }
-
-    function inCanvas(): boolean {
-        return 0 < p.mouseX && p.mouseX < p.width &&
-            0 < p.mouseY && p.mouseY < p.height
     }
 
     function selectColor(voronoi: Voronoi<Delaunay.Point>,

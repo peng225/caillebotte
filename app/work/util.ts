@@ -16,3 +16,8 @@ export function calcCanvasWidth(p: p5, parentID: string) {
     }
     return canvasWidth
 }
+
+export function cursorOnCanvas(p: p5): boolean {
+    return 0 < p.mouseX && p.mouseX < p.width &&
+        0 < p.mouseY && p.mouseY < p.height
+}
