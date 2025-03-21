@@ -9,6 +9,7 @@ const s = (p: p5) => {
 
     let parentID: string
     let scale: number = 1.0
+    let previousDistance: number | null = null;
 
     p.setup = function () {
         const tmpParentID = p.select('[id*="' + parentIDKey + '"]')?.id()
@@ -22,23 +23,7 @@ const s = (p: p5) => {
         const canvas = p.createCanvas(canvasWidth, canvasWidth, p.P2D)
         canvas.parent(parentID)
 
-        disableDefaultWheelEventOnCanvas(canvas)
-
         p.noLoop()
-    }
-
-    function disableDefaultWheelEventOnCanvas(canvas: p5.Renderer) {
-        const canvasElement = canvas.elt as HTMLCanvasElement;
-        canvasElement.addEventListener("mouseenter", () => {
-            document.addEventListener("wheel", disableScroll, { passive: false });
-        });
-        canvasElement.addEventListener("mouseleave", () => {
-            document.removeEventListener("wheel", disableScroll);
-        });
-    }
-
-    function disableScroll(event: WheelEvent) {
-        event.preventDefault();
     }
 
     p.windowResized = function () {
@@ -47,6 +32,17 @@ const s = (p: p5) => {
             return
         }
         p.resizeCanvas(canvasWidth, canvasWidth);
+    }
+
+    function adjustScale(): number {
+        let ret = scale
+        if (scale < 1) {
+            ret = 1
+        }
+        else if (scale >= 9) {
+            ret -= 6
+        }
+        return ret
     }
 
     p.mouseWheel = function (event: WheelEvent) {
@@ -59,14 +55,40 @@ const s = (p: p5) => {
         let delta = event.deltaY / 10
         delta = Math.min(maxDelta, delta)
         delta = Math.max(-maxDelta, delta)
-        scale -= delta
-        if (scale < 1) {
-            scale = 1
-        }
-        else if (scale >= 9) {
-            scale -= 6
-        }
+        scale += delta
+        scale = adjustScale()
         p.redraw()
+        return false
+    }
+
+    p.touchMoved = function () {
+        if (p.touches.length !== 2) {
+            previousDistance = null;
+            return
+        }
+
+        if (!util.anyTouchesOnCanvas(p)) {
+            previousDistance = null;
+            return
+        }
+
+        const t0 = p.touches[0] as { x: number; y: number };
+        const t1 = p.touches[1] as { x: number; y: number };
+        const d = p.dist(t0.x, t0.y, t1.x, t1.y);
+
+        if (previousDistance !== null) {
+            const scaleChange = d / previousDistance;
+            scale *= scaleChange;
+            scale = adjustScale()
+        }
+
+        previousDistance = d;
+        p.redraw()
+        return false
+    }
+
+    p.touchEnded = function () {
+        previousDistance = null
     }
 
     p.draw = function () {
