@@ -1,19 +1,19 @@
-'use client';
+"use client";
 
 import Pagination from "../pagination";
 
 import styles from "../page.module.css";
-import Link from 'next/link';
-import dynamic from 'next/dynamic'
+import Link from "next/link";
+import dynamic from "next/dynamic";
 import { useEffect } from "react";
 
-const workTitle = "Stereogram"
-const workTitleInSnakeCase = workTitle.toLowerCase().replace(" ", "_")
+const workTitle = "Stereogram";
+const workTitleInSnakeCase = workTitle.toLowerCase().replace(" ", "_");
 
-const Kick = dynamic(() => import('./' + workTitleInSnakeCase), {
+const Kick = dynamic(() => import("./" + workTitleInSnakeCase), {
   loading: () => <p>Loading...</p>,
   ssr: false,
-})
+});
 
 export default function Work() {
   useEffect(() => {
@@ -24,8 +24,7 @@ export default function Work() {
       <section className={styles.artwork}>
         <h2>{workTitle}</h2>
         <p>
-          If you slightly shift the focus of your eyes,
-          you will see an object moving in a circle.
+          If you slightly shift the focus of your eyes, you will see an object moving in a circle.
         </p>
 
         <div id={styles.artworkCanvas}></div>
@@ -35,7 +34,10 @@ export default function Work() {
           <h3>References</h3>
           <ul>
             <li>
-              <Link href="https://www.mathartroom.com/stereogram/randomdot_stereogram/" target="_blank">
+              <Link
+                href="https://www.mathartroom.com/stereogram/randomdot_stereogram/"
+                target="_blank"
+              >
                 数学アートの部屋
               </Link>
             </li>

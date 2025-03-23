@@ -1,18 +1,18 @@
-'use client';
+"use client";
 
 import Pagination from "../pagination";
 
 import styles from "../page.module.css";
-import dynamic from 'next/dynamic'
+import dynamic from "next/dynamic";
 import { useEffect } from "react";
 
-const workTitle = "Hyperboloid"
-const workTitleInSnakeCase = workTitle.toLowerCase().replace(" ", "_")
+const workTitle = "Hyperboloid";
+const workTitleInSnakeCase = workTitle.toLowerCase().replace(" ", "_");
 
-const Kick = dynamic(() => import('./' + workTitleInSnakeCase), {
+const Kick = dynamic(() => import("./" + workTitleInSnakeCase), {
   loading: () => <p>Loading...</p>,
   ssr: false,
-})
+});
 
 export default function Work() {
   useEffect(() => {

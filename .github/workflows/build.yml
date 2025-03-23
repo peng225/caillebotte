@@ -47,5 +47,12 @@ jobs:
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
+      - name: Check format
+        run: |
+          ${{ steps.detect-package-manager.outputs.manager }} run check-format
+          if [ $? = 1 ]; then
+              echo "Format error found."
+              exit 1
+          fi
       - name: Run build
-        run: ${{ steps.detect-package-manager.outputs.runner }} next build
+        run: ${{ steps.detect-package-manager.outputs.manager }} run build
