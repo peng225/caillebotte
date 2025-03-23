@@ -7,13 +7,15 @@ import Link from 'next/link';
 import dynamic from 'next/dynamic'
 import { useEffect } from "react";
 
-const Kick = dynamic(() => import('./voronoi_diagram'), {
+const workTitle = "Voronoi Diagram"
+const workTitleInSnakeCase = workTitle.toLowerCase().replace(" ", "_")
+
+const Kick = dynamic(() => import('./' + workTitleInSnakeCase), {
   loading: () => <p>Loading...</p>,
   ssr: false,
 })
 
-export default function VoronoiDiagram() {
-  const workTitle = "Voronoi Diagram"
+export default function Work() {
   useEffect(() => {
     document.title = workTitle;
   }, []);
@@ -37,7 +39,7 @@ export default function VoronoiDiagram() {
           </ul>
         </div>
 
-        <Pagination currentID={4} />
+        <Pagination currentPage={workTitleInSnakeCase} />
       </section>
     </main>
   );
