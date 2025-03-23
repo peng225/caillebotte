@@ -5,6 +5,7 @@ import Pagination from "../pagination";
 import styles from "../page.module.css";
 import Link from 'next/link';
 import dynamic from 'next/dynamic'
+import { useEffect } from "react";
 
 const Kick = dynamic(() => import('./voronoi_diagram'), {
   loading: () => <p>Loading...</p>,
@@ -12,10 +13,14 @@ const Kick = dynamic(() => import('./voronoi_diagram'), {
 })
 
 export default function VoronoiDiagram() {
+  const workTitle = "Voronoi Diagram"
+  useEffect(() => {
+    document.title = workTitle;
+  }, []);
   return (
     <main>
       <section className={styles.artwork}>
-        <h2>Voronoi Diagram</h2>
+        <h2>{workTitle}</h2>
         <p>This work is ...</p>
 
         <div id={styles.artworkCanvas}></div>
