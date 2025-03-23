@@ -22,7 +22,10 @@ export default function Work() {
     <main>
       <section className={styles.artwork}>
         <h2>{workTitle}</h2>
-        <p>This work is ...</p>
+        <p>
+          By rotating the leaves of the plants by golden angles as they are placed,
+          those leaves will be able to receive more sunlight.
+        </p>
 
         <div id={styles.artworkCanvas}></div>
         <Kick />

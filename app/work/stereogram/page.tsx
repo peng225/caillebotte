@@ -23,7 +23,10 @@ export default function Work() {
     <main>
       <section className={styles.artwork}>
         <h2>{workTitle}</h2>
-        <p>This work is ...</p>
+        <p>
+          If you slightly shift the focus of your eyes,
+          you will see an object moving in a circle.
+        </p>
 
         <div id={styles.artworkCanvas}></div>
         <Kick />

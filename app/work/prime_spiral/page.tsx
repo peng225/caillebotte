@@ -22,7 +22,7 @@ export default function Work() {
     <main>
       <section className={styles.artwork}>
         <h2>{workTitle}</h2>
-        <p>This work is ...</p>
+        <p>Mysteriously, prime numbers generate a spiral.</p>
 
         <div id={styles.artworkCanvas}></div>
         <Kick />
