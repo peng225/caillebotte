@@ -6,13 +6,15 @@ import styles from "../page.module.css";
 import dynamic from 'next/dynamic'
 import { useEffect } from "react";
 
-const Kick = dynamic(() => import('./prime_spiral'), {
+const workTitle = "Prime Spiral"
+const workTitleInSnakeCase = workTitle.toLowerCase().replace(" ", "_")
+
+const Kick = dynamic(() => import('./' + workTitleInSnakeCase), {
   loading: () => <p>Loading...</p>,
   ssr: false,
 })
 
-export default function PrimeSpiral() {
-  const workTitle = "Prime Spiral"
+export default function Work() {
   useEffect(() => {
     document.title = workTitle;
   }, []);
@@ -25,7 +27,7 @@ export default function PrimeSpiral() {
         <div id={styles.artworkCanvas}></div>
         <Kick />
 
-        <Pagination currentID={3} />
+        <Pagination currentPage={workTitleInSnakeCase} />
       </section>
     </main>
   );

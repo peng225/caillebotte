@@ -7,13 +7,15 @@ import Link from 'next/link';
 import dynamic from 'next/dynamic'
 import { useEffect } from "react";
 
-const Kick = dynamic(() => import('./chaos_game'), {
+const workTitle = "Chaos Game"
+const workTitleInSnakeCase = workTitle.toLowerCase().replace(" ", "_")
+
+const Kick = dynamic(() => import('./' + workTitleInSnakeCase), {
   loading: () => <p>Loading...</p>,
   ssr: false,
 })
 
-export default function ChaosGame() {
-  const workTitle = "Chaos Game"
+export default function Work() {
   useEffect(() => {
     document.title = workTitle;
   }, []);
@@ -37,7 +39,7 @@ export default function ChaosGame() {
           </ul>
         </div>
 
-        <Pagination currentID={0} />
+        <Pagination currentPage={workTitleInSnakeCase} />
       </section>
     </main>
   );
