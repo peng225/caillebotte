@@ -23,7 +23,7 @@ export default function Work() {
     <main>
       <section className={styles.artwork}>
         <h2>{workTitle}</h2>
-        <p>This work is ...</p>
+        <p>Countless random selections produce fractals.</p>
 
         <div id={styles.artworkCanvas}></div>
         <Kick />

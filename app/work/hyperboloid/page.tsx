@@ -22,7 +22,7 @@ export default function Work() {
     <main>
       <section className={styles.artwork}>
         <h2>{workTitle}</h2>
-        <p>This work is ...</p>
+        <p>A set of lines forms a beautiful curved surface.</p>
 
         <div id={styles.artworkCanvas}></div>
         <Kick />
