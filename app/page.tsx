@@ -1,24 +1,27 @@
 import Image from "next/image";
-import Link from 'next/link';
+import Link from "next/link";
 import styles from "./page.module.css";
 
-import thumb_chaos_game from '../public/images/chaos_game.png'
-import thumb_stereogram from '../public/images/stereogram.png'
-import thumb_hyperboloid from '../public/images/hyperboloid.png'
-import thumb_prime_spiral from '../public/images/prime_spiral.png'
-import thumb_voronoi_diagram from '../public/images/voronoi_diagram.png'
-import thumb_golden_angle from '../public/images/golden_angle.png'
-import thumb_koch_curve from '../public/images/koch_curve.png'
+import thumb_chaos_game from "../public/images/chaos_game.png";
+import thumb_stereogram from "../public/images/stereogram.png";
+import thumb_hyperboloid from "../public/images/hyperboloid.png";
+import thumb_prime_spiral from "../public/images/prime_spiral.png";
+import thumb_voronoi_diagram from "../public/images/voronoi_diagram.png";
+import thumb_golden_angle from "../public/images/golden_angle.png";
+import thumb_koch_curve from "../public/images/koch_curve.png";
 
 export default function Home() {
   return (
     <main>
-      <section className={styles.hero} style={{
-        background: `url(${thumb_chaos_game.src})`,
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "center center",
-        backgroundSize: "cover",
-      }}>
+      <section
+        className={styles.hero}
+        style={{
+          background: `url(${thumb_chaos_game.src})`,
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center center",
+          backgroundSize: "cover",
+        }}
+      >
         <div className={styles.overlay}>
           <h2>Welcome to the world of mathematical art</h2>
           <p>Enjoy the harmony of mathematics, computers, and art.</p>

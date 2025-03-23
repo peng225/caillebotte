@@ -1,19 +1,19 @@
-'use client';
+"use client";
 
 import Pagination from "../pagination";
 
 import styles from "../page.module.css";
-import Link from 'next/link';
-import dynamic from 'next/dynamic'
+import Link from "next/link";
+import dynamic from "next/dynamic";
 import { useEffect } from "react";
 
-const workTitle = "Voronoi Diagram"
-const workTitleInSnakeCase = workTitle.toLowerCase().replace(" ", "_")
+const workTitle = "Voronoi Diagram";
+const workTitleInSnakeCase = workTitle.toLowerCase().replace(" ", "_");
 
-const Kick = dynamic(() => import('./' + workTitleInSnakeCase), {
+const Kick = dynamic(() => import("./" + workTitleInSnakeCase), {
   loading: () => <p>Loading...</p>,
   ssr: false,
-})
+});
 
 export default function Work() {
   useEffect(() => {
@@ -32,7 +32,10 @@ export default function Work() {
           <h3>References</h3>
           <ul>
             <li>
-              <Link href="https://chatgpt.com/share/67cd2847-1c7c-8002-9f15-ae5292b74604" target="_blank">
+              <Link
+                href="https://chatgpt.com/share/67cd2847-1c7c-8002-9f15-ae5292b74604"
+                target="_blank"
+              >
                 ChatGPT
               </Link>
             </li>

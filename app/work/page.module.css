@@ -1,78 +1,78 @@
 .artwork {
-    background-color: #fff;
-    padding: 20px;
-    margin: 15px auto;
-    max-width: 900px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  padding: 20px;
+  margin: 15px auto;
+  max-width: 900px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .artwork h2 {
-    font-size: 2rem;
-    margin-bottom: 20px;
+  font-size: 2rem;
+  margin-bottom: 20px;
 }
 
 .artwork p {
-    margin: 20px 0px;
+  margin: 20px 0px;
 }
 
 .artwork img {
-    width: 100%;
-    height: auto;
-    display: block;
-    margin-bottom: 20px;
+  width: 100%;
+  height: auto;
+  display: block;
+  margin-bottom: 20px;
 }
 
 .pagination {
-    padding: 20px 0px;
-    display: flex;
-    justify-content: center;
-    text-align: center;
+  padding: 20px 0px;
+  display: flex;
+  justify-content: center;
+  text-align: center;
 }
 
 .pagination ul {
-    margin: 0;
-    padding: 0;
-    display: flex;
-    list-style: none;
-    margin: 0 1px;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  list-style: none;
+  margin: 0 1px;
 }
 
 .pagination li {
-    margin: 0 1px;
-    background-color: #eee;
-    color: black;
+  margin: 0 1px;
+  background-color: #eee;
+  color: black;
 }
 
 .pagination .dots {
-    padding: 0.5rem 0.7rem;
+  padding: 0.5rem 0.7rem;
 }
 
 .pagination li a {
-    padding: 0.5rem 0.7rem;
-    text-decoration: none;
-    display: inline-block;
+  padding: 0.5rem 0.7rem;
+  text-decoration: none;
+  display: inline-block;
 }
 
 .pagination ul li .focused {
-    margin: 0 1px;
-    display: inline-block;
-    background-color: gray;
-    color: white;
+  margin: 0 1px;
+  display: inline-block;
+  background-color: gray;
+  color: white;
 }
 
 .pagination ul li a:hover {
-    background-color: #ddd;
+  background-color: #ddd;
 }
 
 #artworkCanvas {
-    position: relative;
+  position: relative;
 }
 
 .references {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 
 .references ul {
-    margin: 10px 20px;
+  margin: 10px 20px;
 }
