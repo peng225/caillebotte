@@ -4,6 +4,8 @@ import p5 from "p5";
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 
+import airPlane from "../../../public/images/airplane.png";
+
 const s = (p: p5) => {
   const fpsMeasureIntervalInSec = 2;
   const parentIDKey = "artworkCanvas";
@@ -17,7 +19,7 @@ const s = (p: p5) => {
   let fps: number;
 
   p.preload = function () {
-    airPlaneImg = p.loadImage("/images/airplane.png");
+    airPlaneImg = p.loadImage(airPlane.src);
   };
 
   p.setup = function () {
