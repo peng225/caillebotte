@@ -9,6 +9,7 @@ import thumb_prime_spiral from "../public/images/prime_spiral.png";
 import thumb_voronoi_diagram from "../public/images/voronoi_diagram.png";
 import thumb_golden_angle from "../public/images/golden_angle.png";
 import thumb_koch_curve from "../public/images/koch_curve.png";
+import thumb_sampling_theorem from "../public/images/sampling_theorem.png";
 
 export default function Home() {
   return (
@@ -70,6 +71,12 @@ export default function Home() {
             <Link href={"/work/koch_curve"}>
               <Image src={thumb_koch_curve} alt="Koch Curve" />
               <p>Koch Curve</p>
+            </Link>
+          </div>
+          <div className={styles.artCard}>
+            <Link href={"/work/sampling_theorem"}>
+              <Image src={thumb_sampling_theorem} alt="Sampling Theorem" />
+              <p>Sampling Theorem</p>
             </Link>
           </div>
         </div>

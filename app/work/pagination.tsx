@@ -12,7 +12,8 @@ const pageNames = new Array<string>(
   "prime_spiral",
   "voronoi_diagram",
   "golden_angle",
-  "koch_curve"
+  "koch_curve",
+  "sampling_theorem"
 );
 
 const pageNameToID = (function (): Map<string, number> {
