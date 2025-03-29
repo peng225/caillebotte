@@ -43,7 +43,7 @@ const s = (p: p5) => {
     rotatePerSecSlider = p.createSlider(0, fr, 0, 1);
     rotatePerSecSlider.parent(parentID);
     rotatePerSecSlider.position(10, 10);
-    rotatePerSecSlider.style("width", "120px");
+    rotatePerSecSlider.style("width", "150px");
 
     setInterval(function () {
       fps = actualFrameCount / fpsMeasureIntervalInSec;
