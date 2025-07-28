@@ -10,6 +10,7 @@ import thumbVoronoiDiagram from "../public/images/voronoi_diagram.png";
 import thumbGoldenAngle from "../public/images/golden_angle.png";
 import thumbKochCurve from "../public/images/koch_curve.png";
 import thumbSamplingTheorem from "../public/images/sampling_theorem.png";
+import thumbFocusesOfEllipse from "../public/images/focuses_of_ellipse.png";
 
 export default function Home() {
   return (
@@ -77,6 +78,12 @@ export default function Home() {
             <Link href={"/work/sampling_theorem"}>
               <Image src={thumbSamplingTheorem} alt="Sampling Theorem" />
               <p>Sampling Theorem</p>
+            </Link>
+          </div>
+          <div className={styles.artCard}>
+            <Link href={"/work/focuses_of_ellipse"}>
+              <Image src={thumbFocusesOfEllipse} alt="Focuses of Ellipse" />
+              <p>Focuses of Ellipse</p>
             </Link>
           </div>
         </div>
